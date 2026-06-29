@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight, Sparkles, Zap, Shield, BarChart3, CreditCard, Globe, Layers,
-  Check, Star, Activity, Bot, Cloud, Box, Quote
+  Check, Star, Activity, Bot, Cloud, Box, Quote, Menu, X
 } from "lucide-react";
 import { FadeIn, Counter, AnimatedHeadline, MagneticButton } from "@/components/landing/primitives";
 import { BackgroundFx, FloatingObjects } from "@/components/landing/effects";
