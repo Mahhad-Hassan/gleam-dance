@@ -39,37 +39,133 @@ function Landing() {
 
 /* ===== Nav ===== */
 function Nav() {
+  const [open, setOpen] = useState(false);
+  const links = ["Product", "Features", "Pricing", "Customers", "Docs"];
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   return (
-    <motion.header
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(1100px,calc(100%-2rem))]"
-    >
-      <div className="glass-strong rounded-full px-5 py-2.5 flex items-center justify-between shadow-elegant">
-        <a href="#" className="flex items-center gap-2 font-display font-semibold">
-          <motion.span
-            className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary-gradient shadow-glow"
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+    <>
+      <motion.header
+        initial={{ y: -40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(1100px,calc(100%-2rem))]"
+      >
+        <div className="glass-strong rounded-full px-5 py-2.5 flex items-center justify-between shadow-elegant">
+          <a href="#" className="flex items-center gap-2 font-display font-semibold">
+            <motion.span
+              className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary-gradient shadow-glow"
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              <Sparkles className="h-4 w-4 text-primary-foreground" />
+            </motion.span>
+            Aether
+          </a>
+          <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
+            {links.map((l) => (
+              <a key={l} href="#" className="relative hover:text-foreground transition-colors duration-300 group">
+                {l}
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-primary-gradient transition-transform duration-300 group-hover:origin-left group-hover:scale-x-100" />
+              </a>
+            ))}
+          </nav>
+          <div className="hidden md:block">
+            <MagneticButton variant="primary" className="!py-2 !px-4 text-xs">
+              Start free <ArrowRight className="h-3.5 w-3.5" />
+            </MagneticButton>
+          </div>
+          <button
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
+            className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-full glass hover:bg-white/10 transition-colors"
           >
-            <Sparkles className="h-4 w-4 text-primary-foreground" />
-          </motion.span>
-          Aether
-        </a>
-        <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
-          {["Product", "Features", "Pricing", "Customers", "Docs"].map((l) => (
-            <a key={l} href="#" className="relative hover:text-foreground transition-colors duration-300 group">
-              {l}
-              <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-primary-gradient transition-transform duration-300 group-hover:origin-left group-hover:scale-x-100" />
-            </a>
-          ))}
-        </nav>
-        <MagneticButton variant="primary" className="!py-2 !px-4 text-xs">
-          Start free <ArrowRight className="h-3.5 w-3.5" />
-        </MagneticButton>
-      </div>
-    </motion.header>
+            <AnimatePresence mode="wait" initial={false}>
+              {open ? (
+                <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <X className="h-4 w-4" />
+                </motion.span>
+              ) : (
+                <motion.span key="m" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <Menu className="h-4 w-4" />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
+      </motion.header>
+
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setOpen(false)}
+              className="fixed inset-0 z-40 bg-background/70 backdrop-blur-xl md:hidden"
+            />
+            <motion.div
+              key="drawer"
+              initial={{ y: -20, opacity: 0, filter: "blur(12px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              exit={{ y: -20, opacity: 0, filter: "blur(12px)" }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed top-20 left-1/2 -translate-x-1/2 z-40 w-[min(420px,calc(100%-2rem))] md:hidden"
+            >
+              <div className="relative glass-strong rounded-3xl p-6 shadow-elegant overflow-hidden">
+                <div className="absolute -top-20 -right-10 h-48 w-48 rounded-full opacity-40 blur-3xl" style={{ background: "var(--glow)" }} />
+                <div className="absolute -bottom-20 -left-10 h-48 w-48 rounded-full opacity-40 blur-3xl" style={{ background: "var(--glow-2)" }} />
+                <nav className="relative flex flex-col">
+                  {links.map((l, i) => (
+                    <motion.a
+                      key={l}
+                      href="#"
+                      onClick={() => setOpen(false)}
+                      initial={{ opacity: 0, x: -20, filter: "blur(8px)" }}
+                      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                      transition={{ duration: 0.45, delay: 0.08 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                      className="group flex items-center justify-between py-4 border-b border-white/5 font-display text-2xl font-semibold hover:text-gradient transition-colors"
+                    >
+                      <span>{l}</span>
+                      <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1 group-hover:text-foreground" />
+                    </motion.a>
+                  ))}
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="mt-6 flex flex-col gap-3"
+                  >
+                    <MagneticButton variant="primary" className="justify-center w-full">
+                      Start free <ArrowRight className="h-4 w-4" />
+                    </MagneticButton>
+                    <MagneticButton variant="ghost" className="justify-center w-full">
+                      Sign in
+                    </MagneticButton>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.55 }}
+                    className="mt-6 flex items-center gap-2 text-xs text-muted-foreground"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-secondary animate-pulse" />
+                    All systems operational
+                  </motion.div>
+                </nav>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
