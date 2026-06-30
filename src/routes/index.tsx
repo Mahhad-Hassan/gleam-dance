@@ -214,7 +214,7 @@ function Hero() {
             transition={{ duration: 0.6, delay: 1.7 }}
             className="mt-9 flex items-center justify-center gap-3 flex-wrap"
           >
-            <MagneticButton variant="primary">
+            <MagneticButton variant="primary" onClick={() => auth.open("signup")}>
               Start building <ArrowRight className="h-4 w-4" />
             </MagneticButton>
             <MagneticButton variant="ghost">
