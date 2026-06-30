@@ -8,6 +8,7 @@ import {
 import { FadeIn, Counter, AnimatedHeadline, MagneticButton } from "@/components/landing/primitives";
 import { BackgroundFx, FloatingObjects } from "@/components/landing/effects";
 import { HeroDashboard } from "@/components/landing/hero-dashboard";
+import { AuthProvider, useAuthModal } from "@/components/auth/auth-modal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,23 +24,26 @@ export const Route = createFileRoute("/")({
 
 function Landing() {
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
-      <Nav />
-      <Hero />
-      <LogoMarquee />
-      <Features />
-      <DashboardSection />
-      <Testimonials />
-      <Pricing />
-      <CTA />
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
+        <Nav />
+        <Hero />
+        <LogoMarquee />
+        <Features />
+        <DashboardSection />
+        <Testimonials />
+        <Pricing />
+        <CTA />
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 
 /* ===== Nav ===== */
 function Nav() {
   const [open, setOpen] = useState(false);
+  const auth = useAuthModal();
   const links = ["Product", "Features", "Pricing", "Customers", "Docs"];
 
   useEffect(() => {
@@ -75,7 +79,7 @@ function Nav() {
             ))}
           </nav>
           <div className="hidden md:block">
-            <MagneticButton variant="primary" className="!py-2 !px-4 text-xs">
+            <MagneticButton variant="primary" className="!py-2 !px-4 text-xs" onClick={() => auth.open("signup")}>
               Start free <ArrowRight className="h-3.5 w-3.5" />
             </MagneticButton>
           </div>
@@ -143,10 +147,10 @@ function Nav() {
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="mt-6 flex flex-col gap-3"
                   >
-                    <MagneticButton variant="primary" className="justify-center w-full">
+                    <MagneticButton variant="primary" className="justify-center w-full" onClick={() => { setOpen(false); auth.open("signup"); }}>
                       Start free <ArrowRight className="h-4 w-4" />
                     </MagneticButton>
-                    <MagneticButton variant="ghost" className="justify-center w-full">
+                    <MagneticButton variant="ghost" className="justify-center w-full" onClick={() => { setOpen(false); auth.open("signin"); }}>
                       Sign in
                     </MagneticButton>
                   </motion.div>
@@ -171,6 +175,7 @@ function Nav() {
 
 /* ===== Hero ===== */
 function Hero() {
+  const auth = useAuthModal();
   return (
     <section className="relative pt-40 pb-24 md:pt-48 md:pb-32">
       <BackgroundFx />
@@ -209,7 +214,7 @@ function Hero() {
             transition={{ duration: 0.6, delay: 1.7 }}
             className="mt-9 flex items-center justify-center gap-3 flex-wrap"
           >
-            <MagneticButton variant="primary">
+            <MagneticButton variant="primary" onClick={() => auth.open("signup")}>
               Start building <ArrowRight className="h-4 w-4" />
             </MagneticButton>
             <MagneticButton variant="ghost">
@@ -617,6 +622,7 @@ function Pricing() {
 
 /* ===== CTA ===== */
 function CTA() {
+  const auth = useAuthModal();
   return (
     <section className="relative py-32">
       <div className="mx-auto max-w-6xl px-6">
@@ -654,7 +660,7 @@ function CTA() {
                 Set up takes about four minutes.
               </p>
               <div className="mt-10 flex items-center justify-center gap-3 flex-wrap">
-                <MagneticButton variant="primary">
+                <MagneticButton variant="primary" onClick={() => auth.open("signup")}>
                   Start building for free <ArrowRight className="h-4 w-4" />
                 </MagneticButton>
                 <MagneticButton variant="ghost">
