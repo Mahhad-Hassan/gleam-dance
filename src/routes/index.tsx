@@ -43,6 +43,7 @@ function Landing() {
 /* ===== Nav ===== */
 function Nav() {
   const [open, setOpen] = useState(false);
+  const auth = useAuthModal();
   const links = ["Product", "Features", "Pricing", "Customers", "Docs"];
 
   useEffect(() => {
