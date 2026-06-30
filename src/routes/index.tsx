@@ -147,10 +147,10 @@ function Nav() {
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="mt-6 flex flex-col gap-3"
                   >
-                    <MagneticButton variant="primary" className="justify-center w-full">
+                    <MagneticButton variant="primary" className="justify-center w-full" onClick={() => { setOpen(false); auth.open("signup"); }}>
                       Start free <ArrowRight className="h-4 w-4" />
                     </MagneticButton>
-                    <MagneticButton variant="ghost" className="justify-center w-full">
+                    <MagneticButton variant="ghost" className="justify-center w-full" onClick={() => { setOpen(false); auth.open("signin"); }}>
                       Sign in
                     </MagneticButton>
                   </motion.div>
