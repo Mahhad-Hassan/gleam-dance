@@ -8,6 +8,7 @@ import {
 import { FadeIn, Counter, AnimatedHeadline, MagneticButton } from "@/components/landing/primitives";
 import { BackgroundFx, FloatingObjects } from "@/components/landing/effects";
 import { HeroDashboard } from "@/components/landing/hero-dashboard";
+import { AuthProvider, useAuthModal } from "@/components/auth/auth-modal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
