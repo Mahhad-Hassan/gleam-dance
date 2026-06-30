@@ -622,6 +622,7 @@ function Pricing() {
 
 /* ===== CTA ===== */
 function CTA() {
+  const auth = useAuthModal();
   return (
     <section className="relative py-32">
       <div className="mx-auto max-w-6xl px-6">
