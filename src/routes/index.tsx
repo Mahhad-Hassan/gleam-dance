@@ -175,6 +175,7 @@ function Nav() {
 
 /* ===== Hero ===== */
 function Hero() {
+  const auth = useAuthModal();
   return (
     <section className="relative pt-40 pb-24 md:pt-48 md:pb-32">
       <BackgroundFx />
