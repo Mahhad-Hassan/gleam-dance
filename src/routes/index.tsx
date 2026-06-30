@@ -79,7 +79,7 @@ function Nav() {
             ))}
           </nav>
           <div className="hidden md:block">
-            <MagneticButton variant="primary" className="!py-2 !px-4 text-xs">
+            <MagneticButton variant="primary" className="!py-2 !px-4 text-xs" onClick={() => auth.open("signup")}>
               Start free <ArrowRight className="h-3.5 w-3.5" />
             </MagneticButton>
           </div>
