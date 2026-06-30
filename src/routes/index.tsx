@@ -660,7 +660,7 @@ function CTA() {
                 Set up takes about four minutes.
               </p>
               <div className="mt-10 flex items-center justify-center gap-3 flex-wrap">
-                <MagneticButton variant="primary">
+                <MagneticButton variant="primary" onClick={() => auth.open("signup")}>
                   Start building for free <ArrowRight className="h-4 w-4" />
                 </MagneticButton>
                 <MagneticButton variant="ghost">
