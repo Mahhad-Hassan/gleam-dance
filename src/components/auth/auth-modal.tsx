@@ -484,7 +484,7 @@ function SignUpForm() {
     setStatus("loading");
     setTimeout(() => {
       setStatus("success");
-      setTimeout(() => navigate({ to: "/dashboard" }), 600);
+      setTimeout(() => navigate({ to: "/onboarding" }), 600);
     }, 1100);
   };
 
