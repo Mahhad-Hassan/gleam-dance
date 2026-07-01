@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Eye, EyeOff, Mail, Lock, User as UserIcon, ArrowRight, X,
   Check, Loader2, Sparkles, Github, ShieldCheck,
