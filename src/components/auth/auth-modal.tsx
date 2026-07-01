@@ -470,6 +470,7 @@ function SignUpForm() {
 
   const strength = passwordStrength(pwd);
 
+  const navigate = useNavigate();
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const errs: typeof errors = {};
@@ -481,7 +482,10 @@ function SignUpForm() {
     setErrors(errs);
     if (Object.keys(errs).length) return;
     setStatus("loading");
-    setTimeout(() => setStatus("success"), 1300);
+    setTimeout(() => {
+      setStatus("success");
+      setTimeout(() => navigate({ to: "/dashboard" }), 600);
+    }, 1100);
   };
 
   return (
