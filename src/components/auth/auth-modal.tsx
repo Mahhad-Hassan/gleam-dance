@@ -415,6 +415,7 @@ function SignInForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  const navigate = useNavigate();
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const errs: typeof errors = {};
@@ -423,7 +424,10 @@ function SignInForm() {
     setErrors(errs);
     if (Object.keys(errs).length) return;
     setStatus("loading");
-    setTimeout(() => setStatus("success"), 1200);
+    setTimeout(() => {
+      setStatus("success");
+      setTimeout(() => navigate({ to: "/dashboard" }), 600);
+    }, 1000);
   };
 
   return (
