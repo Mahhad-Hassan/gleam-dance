@@ -1,22 +1,32 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Search, Bell, Mail, Moon, Sun, Globe, Bot, Plus, HelpCircle, UserCircle,
   Menu, Command, LogOut, Settings, CreditCard, Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCreate } from "./create-modal";
+
 
 export function TopNav({ onMobileOpen }: { onMobileOpen: () => void }) {
   const [dark, setDark] = useState(true);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const create = useCreate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (!profileRef.current?.contains(e.target as Node)) setProfileOpen(false);
     };
+    const onEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setProfileOpen(false); };
     document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onEsc);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onEsc);
+    };
   }, []);
 
   return (
