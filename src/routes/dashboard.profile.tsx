@@ -1,8 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { useState } from "react";
-import { ChevronRight, UserCircle, Upload, Trash2, Check, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { UserCircle, Upload, Trash2 } from "lucide-react";
+import { Breadcrumb, Header, GlassCard, FieldGroup, Input, Select, SaveButton } from "@/components/dashboard/glass-form";
 
 export const Route = createFileRoute("/dashboard/profile")({
   head: () => ({ meta: [{ title: "Profile — Aether" }] }),
