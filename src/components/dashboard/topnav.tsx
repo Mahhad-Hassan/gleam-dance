@@ -67,8 +67,16 @@ export function TopNav({ onMobileOpen }: { onMobileOpen: () => void }) {
         <IconBtn icon={Bell} label="Notifications" badge={7} />
         <IconBtn icon={HelpCircle} label="Help" hideMobile />
 
-        <button className="hidden md:inline-flex items-center gap-1.5 h-10 px-3.5 ml-1 rounded-xl bg-primary-gradient text-primary-foreground text-sm font-medium shadow-glow hover:shadow-[0_0_40px_-6px_var(--glow)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+        <button
+          onClick={() => create.open()}
+          className="hidden md:inline-flex items-center gap-1.5 h-10 px-3.5 ml-1 rounded-xl bg-primary-gradient text-primary-foreground text-sm font-medium shadow-glow hover:shadow-[0_0_40px_-6px_var(--glow)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
           <Plus className="h-4 w-4" /> Create
+        </button>
+        <button
+          onClick={() => create.open()}
+          aria-label="Create"
+          className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary-gradient text-primary-foreground shadow-glow">
+          <Plus className="h-4 w-4" />
         </button>
 
         {/* Profile */}
@@ -95,17 +103,25 @@ export function TopNav({ onMobileOpen }: { onMobileOpen: () => void }) {
                   <div className="text-sm font-medium">Ada Lovelace</div>
                   <div className="text-xs text-muted-foreground truncate">ada@aether.co</div>
                 </div>
-                {[
-                  { icon: UserCircle, label: "Profile" },
-                  { icon: Settings, label: "Settings" },
-                  { icon: CreditCard, label: "Billing" },
-                ].map(i => (
-                  <button key={i.label} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
+                {([
+                  { icon: UserCircle, label: "Profile", to: "/dashboard/profile" as const },
+                  { icon: Settings, label: "Settings", to: "/dashboard/settings" as const },
+                  { icon: CreditCard, label: "Billing", to: "/dashboard/billing" as const },
+                ]).map(i => (
+                  <Link
+                    key={i.label}
+                    to={i.to}
+                    onClick={() => setProfileOpen(false)}
+                    className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"
+                    activeProps={{ className: "text-foreground bg-white/[0.05]" }}
+                  >
                     <i.icon className="h-4 w-4" />{i.label}
-                  </button>
+                  </Link>
                 ))}
                 <div className="my-1 h-px bg-white/[0.06]" />
-                <button className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
+                <button
+                  onClick={() => { setProfileOpen(false); navigate({ to: "/" }); }}
+                  className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
                   <LogOut className="h-4 w-4" /> Sign out
                 </button>
               </motion.div>
