@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { Sparkles } from "lucide-react";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { TopNav } from "@/components/dashboard/topnav";
+import { CreateModalProvider, useCreate } from "@/components/dashboard/create-modal";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
