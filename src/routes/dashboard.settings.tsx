@@ -6,7 +6,7 @@ import {
   Sun, Moon, Monitor, KeyRound, Smartphone, Laptop2, ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Breadcrumb, Header, GlassCard, FieldGroup, Input, Select, SaveButton } from "./dashboard.profile";
+import { Breadcrumb, Header, GlassCard, FieldGroup, Input, Select, SaveButton } from "@/components/dashboard/glass-form";
 
 export const Route = createFileRoute("/dashboard/settings")({
   head: () => ({ meta: [{ title: "Settings — Aether" }] }),

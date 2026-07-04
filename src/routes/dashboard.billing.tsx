@@ -4,7 +4,7 @@ import {
   CreditCard, Download, Plus, Sparkles, Store as StoreIcon, Users, Database, Zap, Check,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Breadcrumb, Header, GlassCard } from "./dashboard.profile";
+import { Breadcrumb, Header, GlassCard } from "@/components/dashboard/glass-form";
 
 export const Route = createFileRoute("/dashboard/billing")({
   head: () => ({ meta: [{ title: "Billing — Aether" }] }),
