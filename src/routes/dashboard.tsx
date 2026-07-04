@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { Sparkles } from "lucide-react";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { TopNav } from "@/components/dashboard/topnav";
+import { CreateModalProvider } from "@/components/dashboard/create-modal";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -27,6 +28,7 @@ function DashboardLayout() {
   }, []);
 
   return (
+    <CreateModalProvider>
     <div className="relative min-h-screen bg-background text-foreground">
       {/* Ambient background */}
       <div className="pointer-events-none fixed inset-0 -z-10">
@@ -66,5 +68,6 @@ function DashboardLayout() {
         <span className="absolute inset-0 rounded-2xl bg-primary-gradient blur-xl opacity-50 -z-10" />
       </motion.button>
     </div>
+    </CreateModalProvider>
   );
 }
