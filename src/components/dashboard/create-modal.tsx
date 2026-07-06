@@ -16,23 +16,21 @@ export function useCreate() {
 }
 
 type Item = {
-  key: string;
+  key: "project" | "website" | "template" | "store" | "ai-store" | "product" | "collection";
   icon: any;
   title: string;
   desc: string;
   tint: string;
-  to?: string;
-  slug?: string;
 };
 
 const ITEMS: Item[] = [
-  { key: "project",    icon: FolderPlus,     title: "New Project",   desc: "Start from a blank workspace with AI scaffolding.", tint: "from-violet-500/30 to-fuchsia-500/10", slug: "" },
-  { key: "website",    icon: Globe,          title: "Website",       desc: "Ship a marketing site with the AI page builder.",  tint: "from-cyan-500/30 to-sky-500/10",       slug: "online-store" },
-  { key: "template",   icon: LayoutTemplate, title: "Template",      desc: "Kickstart from a curated design template.",         tint: "from-fuchsia-500/30 to-pink-500/10",   slug: "content" },
-  { key: "store",      icon: Store,          title: "Store",         desc: "Launch a full ecommerce storefront in minutes.",    tint: "from-emerald-500/30 to-teal-500/10",   slug: "online-store" },
-  { key: "ai-store",   icon: Bot,            title: "AI Store",      desc: "Agentic commerce with conversational selling.",     tint: "from-amber-500/30 to-orange-500/10",   slug: "agentic" },
-  { key: "product",    icon: Package,        title: "Product",       desc: "Add a product with AI-generated copy & images.",    tint: "from-rose-500/30 to-orange-500/10",    slug: "products" },
-  { key: "collection", icon: Layers,         title: "Collection",    desc: "Group products into shoppable collections.",        tint: "from-sky-500/30 to-indigo-500/10",     slug: "products/collections" },
+  { key: "project",    icon: FolderPlus,     title: "New Project",   desc: "Start from a blank workspace with AI scaffolding.", tint: "from-violet-500/30 to-fuchsia-500/10" },
+  { key: "website",    icon: Globe,          title: "Website",       desc: "Ship a marketing site with the AI page builder.",  tint: "from-cyan-500/30 to-sky-500/10" },
+  { key: "template",   icon: LayoutTemplate, title: "Template",      desc: "Kickstart from a curated design template.",         tint: "from-fuchsia-500/30 to-pink-500/10" },
+  { key: "store",      icon: Store,          title: "Store",         desc: "Launch a full ecommerce storefront in minutes.",    tint: "from-emerald-500/30 to-teal-500/10" },
+  { key: "ai-store",   icon: Bot,            title: "AI Store",      desc: "Agentic commerce with conversational selling.",     tint: "from-amber-500/30 to-orange-500/10" },
+  { key: "product",    icon: Package,        title: "Product",       desc: "Add a product with AI-generated copy & images.",    tint: "from-rose-500/30 to-orange-500/10" },
+  { key: "collection", icon: Layers,         title: "Collection",    desc: "Group products into shoppable collections.",        tint: "from-sky-500/30 to-indigo-500/10" },
 ];
 
 export function CreateModalProvider({ children }: { children: React.ReactNode }) {
@@ -60,10 +58,7 @@ function CreateModal({ open, onClose }: { open: boolean; onClose: () => void }) 
 
   const pick = (it: Item) => {
     onClose();
-    if (it.slug !== undefined) {
-      if (it.slug === "") navigate({ to: "/dashboard" });
-      else navigate({ to: "/dashboard/$", params: { _splat: it.slug } });
-    }
+    navigate({ to: "/dashboard/new/$kind", params: { kind: it.key } });
   };
 
   return (
