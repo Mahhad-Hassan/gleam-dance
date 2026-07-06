@@ -11,7 +11,8 @@ export const Route = createFileRoute("/dashboard/notifications")({
 
 type Cat = "all" | "orders" | "payments" | "inventory" | "ai" | "marketing";
 
-const ITEMS = [
+type Item = { cat: Exclude<Cat, "all">; icon: any; tone: string; title: string; body: string; when: string; unread?: boolean };
+const ITEMS: Item[] = [
   { cat: "orders",    icon: ShoppingCart, tone: "from-emerald-500 to-teal-500", title: "New order #A-3021", body: "Priya Nair · $128.00", when: "2m", unread: true },
   { cat: "payments",  icon: CreditCard,   tone: "from-cyan-500 to-sky-500",     title: "Payout of $8,240 sent", body: "Arriving Nov 4 to Chase ••4021", when: "18m", unread: true },
   { cat: "inventory", icon: Package,      tone: "from-amber-500 to-orange-500", title: "Runner Pro — low stock", body: "Only 6 units left across 2 warehouses", when: "1h", unread: true },
@@ -19,7 +20,7 @@ const ITEMS = [
   { cat: "marketing", icon: Megaphone,    tone: "from-rose-500 to-pink-500",    title: "Autumn Drop email — 42% open", body: "Sent to 24,800 subscribers", when: "5h" },
   { cat: "orders",    icon: ShoppingCart, tone: "from-emerald-500 to-teal-500", title: "Order #A-3019 shipped", body: "Tracking #UPS1ZE84…", when: "Yesterday" },
   { cat: "ai",        icon: Sparkles,     tone: "from-violet-500 to-fuchsia-500", title: "Anomaly: refunds up 18%", body: "Investigate cohort from Nov 1–3", when: "Yesterday" },
-] as const;
+];
 
 const CATS: { key: Cat; label: string }[] = [
   { key: "all", label: "All" },
