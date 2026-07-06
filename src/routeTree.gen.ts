@@ -13,10 +13,20 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardWorkspaceRouteImport } from './routes/dashboard.workspace'
 import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as DashboardSecurityRouteImport } from './routes/dashboard.security'
 import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile'
+import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
+import { Route as DashboardLanguageRouteImport } from './routes/dashboard.language'
+import { Route as DashboardInboxRouteImport } from './routes/dashboard.inbox'
+import { Route as DashboardHelpRouteImport } from './routes/dashboard.help'
 import { Route as DashboardBillingRouteImport } from './routes/dashboard.billing'
+import { Route as DashboardAppearanceRouteImport } from './routes/dashboard.appearance'
+import { Route as DashboardApiKeysRouteImport } from './routes/dashboard.api-keys'
+import { Route as DashboardAiRouteImport } from './routes/dashboard.ai'
 import { Route as DashboardSplatRouteImport } from './routes/dashboard.$'
+import { Route as DashboardNewKindRouteImport } from './routes/dashboard.new.$kind'
 
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
@@ -38,9 +48,19 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardWorkspaceRoute = DashboardWorkspaceRouteImport.update({
+  id: '/workspace',
+  path: '/workspace',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSecurityRoute = DashboardSecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardProfileRoute = DashboardProfileRouteImport.update({
@@ -48,14 +68,54 @@ const DashboardProfileRoute = DashboardProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardNotificationsRoute = DashboardNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardLanguageRoute = DashboardLanguageRouteImport.update({
+  id: '/language',
+  path: '/language',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardInboxRoute = DashboardInboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardHelpRoute = DashboardHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardBillingRoute = DashboardBillingRouteImport.update({
   id: '/billing',
   path: '/billing',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardAppearanceRoute = DashboardAppearanceRouteImport.update({
+  id: '/appearance',
+  path: '/appearance',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardApiKeysRoute = DashboardApiKeysRouteImport.update({
+  id: '/api-keys',
+  path: '/api-keys',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAiRoute = DashboardAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardSplatRoute = DashboardSplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardNewKindRoute = DashboardNewKindRouteImport.update({
+  id: '/new/$kind',
+  path: '/new/$kind',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -64,19 +124,39 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/dashboard/$': typeof DashboardSplatRoute
+  '/dashboard/ai': typeof DashboardAiRoute
+  '/dashboard/api-keys': typeof DashboardApiKeysRoute
+  '/dashboard/appearance': typeof DashboardAppearanceRoute
   '/dashboard/billing': typeof DashboardBillingRoute
+  '/dashboard/help': typeof DashboardHelpRoute
+  '/dashboard/inbox': typeof DashboardInboxRoute
+  '/dashboard/language': typeof DashboardLanguageRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
   '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/security': typeof DashboardSecurityRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/workspace': typeof DashboardWorkspaceRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/new/$kind': typeof DashboardNewKindRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/dashboard/$': typeof DashboardSplatRoute
+  '/dashboard/ai': typeof DashboardAiRoute
+  '/dashboard/api-keys': typeof DashboardApiKeysRoute
+  '/dashboard/appearance': typeof DashboardAppearanceRoute
   '/dashboard/billing': typeof DashboardBillingRoute
+  '/dashboard/help': typeof DashboardHelpRoute
+  '/dashboard/inbox': typeof DashboardInboxRoute
+  '/dashboard/language': typeof DashboardLanguageRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
   '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/security': typeof DashboardSecurityRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/workspace': typeof DashboardWorkspaceRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/new/$kind': typeof DashboardNewKindRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -84,10 +164,20 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/dashboard/$': typeof DashboardSplatRoute
+  '/dashboard/ai': typeof DashboardAiRoute
+  '/dashboard/api-keys': typeof DashboardApiKeysRoute
+  '/dashboard/appearance': typeof DashboardAppearanceRoute
   '/dashboard/billing': typeof DashboardBillingRoute
+  '/dashboard/help': typeof DashboardHelpRoute
+  '/dashboard/inbox': typeof DashboardInboxRoute
+  '/dashboard/language': typeof DashboardLanguageRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
   '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/security': typeof DashboardSecurityRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/workspace': typeof DashboardWorkspaceRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/new/$kind': typeof DashboardNewKindRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -96,29 +186,59 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/onboarding'
     | '/dashboard/$'
+    | '/dashboard/ai'
+    | '/dashboard/api-keys'
+    | '/dashboard/appearance'
     | '/dashboard/billing'
+    | '/dashboard/help'
+    | '/dashboard/inbox'
+    | '/dashboard/language'
+    | '/dashboard/notifications'
     | '/dashboard/profile'
+    | '/dashboard/security'
     | '/dashboard/settings'
+    | '/dashboard/workspace'
     | '/dashboard/'
+    | '/dashboard/new/$kind'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/onboarding'
     | '/dashboard/$'
+    | '/dashboard/ai'
+    | '/dashboard/api-keys'
+    | '/dashboard/appearance'
     | '/dashboard/billing'
+    | '/dashboard/help'
+    | '/dashboard/inbox'
+    | '/dashboard/language'
+    | '/dashboard/notifications'
     | '/dashboard/profile'
+    | '/dashboard/security'
     | '/dashboard/settings'
+    | '/dashboard/workspace'
     | '/dashboard'
+    | '/dashboard/new/$kind'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
     | '/onboarding'
     | '/dashboard/$'
+    | '/dashboard/ai'
+    | '/dashboard/api-keys'
+    | '/dashboard/appearance'
     | '/dashboard/billing'
+    | '/dashboard/help'
+    | '/dashboard/inbox'
+    | '/dashboard/language'
+    | '/dashboard/notifications'
     | '/dashboard/profile'
+    | '/dashboard/security'
     | '/dashboard/settings'
+    | '/dashboard/workspace'
     | '/dashboard/'
+    | '/dashboard/new/$kind'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -157,11 +277,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/workspace': {
+      id: '/dashboard/workspace'
+      path: '/workspace'
+      fullPath: '/dashboard/workspace'
+      preLoaderRoute: typeof DashboardWorkspaceRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/settings': {
       id: '/dashboard/settings'
       path: '/settings'
       fullPath: '/dashboard/settings'
       preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/security': {
+      id: '/dashboard/security'
+      path: '/security'
+      fullPath: '/dashboard/security'
+      preLoaderRoute: typeof DashboardSecurityRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/profile': {
@@ -171,11 +305,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardProfileRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/notifications': {
+      id: '/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof DashboardNotificationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/language': {
+      id: '/dashboard/language'
+      path: '/language'
+      fullPath: '/dashboard/language'
+      preLoaderRoute: typeof DashboardLanguageRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/inbox': {
+      id: '/dashboard/inbox'
+      path: '/inbox'
+      fullPath: '/dashboard/inbox'
+      preLoaderRoute: typeof DashboardInboxRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/help': {
+      id: '/dashboard/help'
+      path: '/help'
+      fullPath: '/dashboard/help'
+      preLoaderRoute: typeof DashboardHelpRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/billing': {
       id: '/dashboard/billing'
       path: '/billing'
       fullPath: '/dashboard/billing'
       preLoaderRoute: typeof DashboardBillingRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/appearance': {
+      id: '/dashboard/appearance'
+      path: '/appearance'
+      fullPath: '/dashboard/appearance'
+      preLoaderRoute: typeof DashboardAppearanceRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/api-keys': {
+      id: '/dashboard/api-keys'
+      path: '/api-keys'
+      fullPath: '/dashboard/api-keys'
+      preLoaderRoute: typeof DashboardApiKeysRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/ai': {
+      id: '/dashboard/ai'
+      path: '/ai'
+      fullPath: '/dashboard/ai'
+      preLoaderRoute: typeof DashboardAiRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/$': {
@@ -185,23 +368,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSplatRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/new/$kind': {
+      id: '/dashboard/new/$kind'
+      path: '/new/$kind'
+      fullPath: '/dashboard/new/$kind'
+      preLoaderRoute: typeof DashboardNewKindRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
   DashboardSplatRoute: typeof DashboardSplatRoute
+  DashboardAiRoute: typeof DashboardAiRoute
+  DashboardApiKeysRoute: typeof DashboardApiKeysRoute
+  DashboardAppearanceRoute: typeof DashboardAppearanceRoute
   DashboardBillingRoute: typeof DashboardBillingRoute
+  DashboardHelpRoute: typeof DashboardHelpRoute
+  DashboardInboxRoute: typeof DashboardInboxRoute
+  DashboardLanguageRoute: typeof DashboardLanguageRoute
+  DashboardNotificationsRoute: typeof DashboardNotificationsRoute
   DashboardProfileRoute: typeof DashboardProfileRoute
+  DashboardSecurityRoute: typeof DashboardSecurityRoute
   DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardWorkspaceRoute: typeof DashboardWorkspaceRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardNewKindRoute: typeof DashboardNewKindRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardSplatRoute: DashboardSplatRoute,
+  DashboardAiRoute: DashboardAiRoute,
+  DashboardApiKeysRoute: DashboardApiKeysRoute,
+  DashboardAppearanceRoute: DashboardAppearanceRoute,
   DashboardBillingRoute: DashboardBillingRoute,
+  DashboardHelpRoute: DashboardHelpRoute,
+  DashboardInboxRoute: DashboardInboxRoute,
+  DashboardLanguageRoute: DashboardLanguageRoute,
+  DashboardNotificationsRoute: DashboardNotificationsRoute,
   DashboardProfileRoute: DashboardProfileRoute,
+  DashboardSecurityRoute: DashboardSecurityRoute,
   DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardWorkspaceRoute: DashboardWorkspaceRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardNewKindRoute: DashboardNewKindRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(

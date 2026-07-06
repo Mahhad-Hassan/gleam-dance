@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Search, Bell, Mail, Moon, Sun, Globe, Bot, Plus, HelpCircle, UserCircle,
-  Menu, Command, LogOut, Settings, CreditCard, Sparkles,
+  Menu, Command, LogOut, Settings, CreditCard, Sparkles, Briefcase, KeyRound, Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCreate } from "./create-modal";
@@ -59,13 +59,14 @@ export function TopNav({ onMobileOpen }: { onMobileOpen: () => void }) {
       </div>
 
       <div className="flex items-center gap-1 md:gap-1.5 ml-auto">
-        <IconBtn icon={Sparkles} label="AI Assistant" glow />
-        <IconBtn icon={Bot} label="Agentic" hideMobile />
-        <IconBtn icon={Globe} label="Language" hideMobile />
-        <IconBtn icon={dark ? Moon : Sun} label="Theme" onClick={() => setDark(d => !d)} />
-        <IconBtn icon={Mail} label="Messages" badge={3} hideMobile />
-        <IconBtn icon={Bell} label="Notifications" badge={7} />
-        <IconBtn icon={HelpCircle} label="Help" hideMobile />
+        <IconBtn icon={Sparkles} label="AI Assistant" glow to="/dashboard/ai" />
+        <IconBtn icon={Bot} label="Workspace" hideMobile to="/dashboard/workspace" />
+        <IconBtn icon={Globe} label="Language" hideMobile to="/dashboard/language" />
+        <IconBtn icon={dark ? Moon : Sun} label="Theme" onClick={() => setDark(d => !d)} altTo="/dashboard/appearance" />
+        <IconBtn icon={Mail} label="Messages" badge={3} hideMobile to="/dashboard/inbox" />
+        <IconBtn icon={Bell} label="Notifications" badge={7} to="/dashboard/notifications" />
+        <IconBtn icon={HelpCircle} label="Help" hideMobile to="/dashboard/help" />
+
 
         <button
           onClick={() => create.open()}
@@ -107,6 +108,10 @@ export function TopNav({ onMobileOpen }: { onMobileOpen: () => void }) {
                   { icon: UserCircle, label: "Profile", to: "/dashboard/profile" as const },
                   { icon: Settings, label: "Settings", to: "/dashboard/settings" as const },
                   { icon: CreditCard, label: "Billing", to: "/dashboard/billing" as const },
+                  { icon: Briefcase, label: "Workspace", to: "/dashboard/workspace" as const },
+                  { icon: KeyRound, label: "API Keys", to: "/dashboard/api-keys" as const },
+                  { icon: Shield, label: "Security", to: "/dashboard/security" as const },
+                  { icon: Bell, label: "Notifications", to: "/dashboard/notifications" as const },
                 ]).map(i => (
                   <Link
                     key={i.label}
@@ -134,26 +139,31 @@ export function TopNav({ onMobileOpen }: { onMobileOpen: () => void }) {
 }
 
 function IconBtn({
-  icon: Icon, label, badge, onClick, glow, hideMobile,
-}: { icon: any; label: string; badge?: number; onClick?: () => void; glow?: boolean; hideMobile?: boolean }) {
-  return (
-    <button
-      onClick={onClick}
-      aria-label={label}
-      className={cn(
-        "relative inline-flex h-9 w-9 items-center justify-center rounded-xl text-muted-foreground",
-        "hover:text-foreground hover:bg-white/5 transition-all duration-200",
-        "hover:-translate-y-0.5",
-        glow && "text-foreground bg-primary-gradient/10 hover:shadow-glow",
-        hideMobile && "hidden md:inline-flex"
-      )}
-    >
+  icon: Icon, label, badge, onClick, glow, hideMobile, to, altTo,
+}: { icon: any; label: string; badge?: number; onClick?: () => void; glow?: boolean; hideMobile?: boolean; to?: string; altTo?: string }) {
+  const cls = cn(
+    "relative inline-flex h-9 w-9 items-center justify-center rounded-xl text-muted-foreground",
+    "hover:text-foreground hover:bg-white/5 transition-all duration-200 hover:-translate-y-0.5",
+    glow && "text-foreground bg-primary-gradient/10 hover:shadow-glow",
+    hideMobile && "hidden md:inline-flex"
+  );
+  const inner = (
+    <>
       <Icon className="h-4 w-4" />
       {badge != null && (
         <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-primary-gradient text-[9px] font-semibold text-primary-foreground flex items-center justify-center shadow-glow">
           {badge}
         </span>
       )}
-    </button>
+    </>
+  );
+  if (to) return <Link to={to} aria-label={label} className={cls}>{inner}</Link>;
+  return (
+    <button
+      onClick={onClick}
+      onDoubleClick={altTo ? () => window.location.assign(altTo) : undefined}
+      aria-label={label}
+      className={cls}
+    >{inner}</button>
   );
 }
