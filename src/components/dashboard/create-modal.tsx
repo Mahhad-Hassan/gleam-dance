@@ -58,6 +58,10 @@ function CreateModal({ open, onClose }: { open: boolean; onClose: () => void }) 
 
   const pick = (it: Item) => {
     onClose();
+    if (it.key === "template") {
+      navigate({ to: "/templates" });
+      return;
+    }
     navigate({ to: "/dashboard/new/$kind", params: { kind: it.key } });
   };
 
