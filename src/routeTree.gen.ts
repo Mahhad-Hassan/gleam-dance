@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as BuilderRouteImport } from './routes/builder'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TemplatesIndexRouteImport } from './routes/templates.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as TemplatesIdRouteImport } from './routes/templates.$id'
 import { Route as DashboardWorkspaceRouteImport } from './routes/dashboard.workspace'
 import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
 import { Route as DashboardSecurityRouteImport } from './routes/dashboard.security'
@@ -26,6 +29,7 @@ import { Route as DashboardAppearanceRouteImport } from './routes/dashboard.appe
 import { Route as DashboardApiKeysRouteImport } from './routes/dashboard.api-keys'
 import { Route as DashboardAiRouteImport } from './routes/dashboard.ai'
 import { Route as DashboardSplatRouteImport } from './routes/dashboard.$'
+import { Route as TemplatesIdApplyRouteImport } from './routes/templates.$id.apply'
 import { Route as DashboardNewKindRouteImport } from './routes/dashboard.new.$kind'
 
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -38,15 +42,30 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuilderRoute = BuilderRouteImport.update({
+  id: '/builder',
+  path: '/builder',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemplatesIndexRoute = TemplatesIndexRouteImport.update({
+  id: '/templates/',
+  path: '/templates/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+const TemplatesIdRoute = TemplatesIdRouteImport.update({
+  id: '/templates/$id',
+  path: '/templates/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardWorkspaceRoute = DashboardWorkspaceRouteImport.update({
   id: '/workspace',
@@ -113,6 +132,11 @@ const DashboardSplatRoute = DashboardSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => DashboardRoute,
 } as any)
+const TemplatesIdApplyRoute = TemplatesIdApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => TemplatesIdRoute,
+} as any)
 const DashboardNewKindRoute = DashboardNewKindRouteImport.update({
   id: '/new/$kind',
   path: '/new/$kind',
@@ -121,6 +145,7 @@ const DashboardNewKindRoute = DashboardNewKindRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/builder': typeof BuilderRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/dashboard/$': typeof DashboardSplatRoute
@@ -136,11 +161,15 @@ export interface FileRoutesByFullPath {
   '/dashboard/security': typeof DashboardSecurityRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/workspace': typeof DashboardWorkspaceRoute
+  '/templates/$id': typeof TemplatesIdRouteWithChildren
   '/dashboard/': typeof DashboardIndexRoute
+  '/templates/': typeof TemplatesIndexRoute
   '/dashboard/new/$kind': typeof DashboardNewKindRoute
+  '/templates/$id/apply': typeof TemplatesIdApplyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/builder': typeof BuilderRoute
   '/onboarding': typeof OnboardingRoute
   '/dashboard/$': typeof DashboardSplatRoute
   '/dashboard/ai': typeof DashboardAiRoute
@@ -155,12 +184,16 @@ export interface FileRoutesByTo {
   '/dashboard/security': typeof DashboardSecurityRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/workspace': typeof DashboardWorkspaceRoute
+  '/templates/$id': typeof TemplatesIdRouteWithChildren
   '/dashboard': typeof DashboardIndexRoute
+  '/templates': typeof TemplatesIndexRoute
   '/dashboard/new/$kind': typeof DashboardNewKindRoute
+  '/templates/$id/apply': typeof TemplatesIdApplyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/builder': typeof BuilderRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/dashboard/$': typeof DashboardSplatRoute
@@ -176,13 +209,17 @@ export interface FileRoutesById {
   '/dashboard/security': typeof DashboardSecurityRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/workspace': typeof DashboardWorkspaceRoute
+  '/templates/$id': typeof TemplatesIdRouteWithChildren
   '/dashboard/': typeof DashboardIndexRoute
+  '/templates/': typeof TemplatesIndexRoute
   '/dashboard/new/$kind': typeof DashboardNewKindRoute
+  '/templates/$id/apply': typeof TemplatesIdApplyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/builder'
     | '/dashboard'
     | '/onboarding'
     | '/dashboard/$'
@@ -198,11 +235,15 @@ export interface FileRouteTypes {
     | '/dashboard/security'
     | '/dashboard/settings'
     | '/dashboard/workspace'
+    | '/templates/$id'
     | '/dashboard/'
+    | '/templates/'
     | '/dashboard/new/$kind'
+    | '/templates/$id/apply'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/builder'
     | '/onboarding'
     | '/dashboard/$'
     | '/dashboard/ai'
@@ -217,11 +258,15 @@ export interface FileRouteTypes {
     | '/dashboard/security'
     | '/dashboard/settings'
     | '/dashboard/workspace'
+    | '/templates/$id'
     | '/dashboard'
+    | '/templates'
     | '/dashboard/new/$kind'
+    | '/templates/$id/apply'
   id:
     | '__root__'
     | '/'
+    | '/builder'
     | '/dashboard'
     | '/onboarding'
     | '/dashboard/$'
@@ -237,14 +282,20 @@ export interface FileRouteTypes {
     | '/dashboard/security'
     | '/dashboard/settings'
     | '/dashboard/workspace'
+    | '/templates/$id'
     | '/dashboard/'
+    | '/templates/'
     | '/dashboard/new/$kind'
+    | '/templates/$id/apply'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuilderRoute: typeof BuilderRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   OnboardingRoute: typeof OnboardingRoute
+  TemplatesIdRoute: typeof TemplatesIdRouteWithChildren
+  TemplatesIndexRoute: typeof TemplatesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -263,11 +314,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/builder': {
+      id: '/builder'
+      path: '/builder'
+      fullPath: '/builder'
+      preLoaderRoute: typeof BuilderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/templates/': {
+      id: '/templates/'
+      path: '/templates'
+      fullPath: '/templates/'
+      preLoaderRoute: typeof TemplatesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/': {
@@ -276,6 +341,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/templates/$id': {
+      id: '/templates/$id'
+      path: '/templates/$id'
+      fullPath: '/templates/$id'
+      preLoaderRoute: typeof TemplatesIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/dashboard/workspace': {
       id: '/dashboard/workspace'
@@ -368,6 +440,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSplatRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/templates/$id/apply': {
+      id: '/templates/$id/apply'
+      path: '/apply'
+      fullPath: '/templates/$id/apply'
+      preLoaderRoute: typeof TemplatesIdApplyRouteImport
+      parentRoute: typeof TemplatesIdRoute
+    }
     '/dashboard/new/$kind': {
       id: '/dashboard/new/$kind'
       path: '/new/$kind'
@@ -418,10 +497,25 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
   DashboardRouteChildren,
 )
 
+interface TemplatesIdRouteChildren {
+  TemplatesIdApplyRoute: typeof TemplatesIdApplyRoute
+}
+
+const TemplatesIdRouteChildren: TemplatesIdRouteChildren = {
+  TemplatesIdApplyRoute: TemplatesIdApplyRoute,
+}
+
+const TemplatesIdRouteWithChildren = TemplatesIdRoute._addFileChildren(
+  TemplatesIdRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuilderRoute: BuilderRoute,
   DashboardRoute: DashboardRouteWithChildren,
   OnboardingRoute: OnboardingRoute,
+  TemplatesIdRoute: TemplatesIdRouteWithChildren,
+  TemplatesIndexRoute: TemplatesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
