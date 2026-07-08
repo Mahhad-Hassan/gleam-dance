@@ -8,10 +8,12 @@ import {
 } from "lucide-react";
 import { z } from "zod";
 import { getTemplate, TEMPLATES, type Template } from "@/lib/templates-data";
+import { THEME_COLORS, getThemeColor } from "@/lib/theme-colors";
 import { cn } from "@/lib/utils";
 
 const searchSchema = z.object({
   template: z.string().optional(),
+  color: z.string().optional(),
 });
 
 export const Route = createFileRoute("/builder")({
@@ -26,15 +28,17 @@ type Panel = "pages" | "layers" | "assets" | "components" | "theme" | "navigatio
 const SECTIONS = ["Header","Hero","Features","Gallery","Pricing","Testimonials","Footer"] as const;
 
 function Builder() {
-  const { template: tid } = Route.useSearch();
+  const { template: tid, color: colorId } = Route.useSearch();
   const t = tid ? getTemplate(tid) : TEMPLATES[0];
+  const initialTheme = getThemeColor(colorId);
   const [device, setDevice] = useState<Device>("desktop");
   const [panel, setPanel] = useState<Panel>("pages");
   const [savedTs, setSavedTs] = useState<"idle" | "saving" | "saved">("idle");
   const [publishOpen, setPublishOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("Hero");
   const [theme, setTheme] = useState({
-    accent: t.accent,
+    accent: initialTheme.accent,
+    colorId: initialTheme.id,
     display: t.fontDisplay,
     body: t.fontBody,
     density: 1,
