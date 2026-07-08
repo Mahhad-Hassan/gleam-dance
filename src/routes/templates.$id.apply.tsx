@@ -33,7 +33,9 @@ const STEPS = [
 
 function ApplyTemplate() {
   const { id } = Route.useParams();
+  const { color } = Route.useSearch();
   const t = getTemplate(id);
+  const theme = useMemo(() => getThemeColor(color), [color]);
   const navigate = useNavigate();
   const [idx, setIdx] = useState(0);
   const [done, setDone] = useState(false);
