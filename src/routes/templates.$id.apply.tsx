@@ -178,16 +178,15 @@ function ApplyTemplate() {
   );
 }
 
-function ActionBtn({ icon: Icon, label, onClick, primary }: { icon: any; label: string; onClick: () => void; primary?: boolean }) {
+function ActionBtn({ icon: Icon, label, onClick, primary, accent, ink }: { icon: any; label: string; onClick: () => void; primary?: boolean; accent?: string; ink?: string }) {
   return (
     <motion.button
       whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} onClick={onClick}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 h-11 rounded-xl text-sm font-medium transition",
-        primary
-          ? "bg-primary-gradient text-primary-foreground shadow-glow"
-          : "glass border border-white/10 hover:bg-white/10"
+        "inline-flex items-center justify-center gap-1.5 h-11 rounded-xl text-sm font-medium transition shadow-glow",
+        primary ? "" : "glass border border-white/10 hover:bg-white/10"
       )}
+      style={primary && accent ? { background: accent, color: ink } : undefined}
     >
       <Icon className="h-4 w-4" /> {label}
     </motion.button>
