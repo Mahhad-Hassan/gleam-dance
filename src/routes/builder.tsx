@@ -449,10 +449,24 @@ function ThemePanel({ theme, setTheme, template }: { theme: any; setTheme: (fn: 
           ))}
         </div>
       </InspectorGroup>
-      <InspectorGroup title="Accent">
+      <InspectorGroup title="Theme color">
+        <div className="grid grid-cols-6 gap-1.5">
+          {THEME_COLORS.map(c => (
+            <button key={c.id} title={c.name}
+              onClick={() => setTheme((s: any) => ({ ...s, accent: c.accent, colorId: c.id }))}
+              className={cn("h-7 w-7 rounded-md border transition hover:scale-110",
+                theme.colorId === c.id ? "border-white ring-2 ring-primary/60" : "border-white/10"
+              )} style={{ background: c.accent }} />
+          ))}
+        </div>
+        <div className="mt-1 text-[10px] text-muted-foreground">
+          {THEME_COLORS.find(c => c.id === theme.colorId)?.name ?? "Custom"}
+        </div>
+      </InspectorGroup>
+      <InspectorGroup title="Palette">
         <div className="flex flex-wrap gap-1.5">
           {template.palette.map((c, i) => (
-            <button key={i} onClick={() => setTheme((s: any) => ({ ...s, accent: c }))}
+            <button key={i} onClick={() => setTheme((s: any) => ({ ...s, accent: c, colorId: "custom" }))}
               className={cn("h-7 w-7 rounded-md border transition",
                 theme.accent === c ? "border-white ring-2 ring-primary/50" : "border-white/10"
               )} style={{ background: c }} />
