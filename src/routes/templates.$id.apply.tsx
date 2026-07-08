@@ -138,17 +138,23 @@ function ApplyTemplate() {
               Your new website powered by <span className="text-foreground font-medium">{t.name}</span> is ready.
             </p>
 
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full glass border border-white/10 px-3 py-1 text-[11px]">
+              <span className="h-3 w-3 rounded-full" style={{ background: theme.accent }} />
+              <span className="text-muted-foreground">Theme:</span>
+              <span className="font-medium" style={{ color: theme.accent }}>{theme.name}</span>
+            </div>
+
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
               <ActionBtn
-                onClick={() => navigate({ to: "/builder", search: { template: t.id } })}
-                primary icon={PenTool} label="Edit website"
+                onClick={() => navigate({ to: "/builder", search: { template: t.id, color: theme.id } as any })}
+                primary icon={PenTool} label="Edit website" accent={theme.accent} ink={theme.ink}
               />
               <ActionBtn
-                onClick={() => navigate({ to: "/builder", search: { template: t.id } })}
+                onClick={() => navigate({ to: "/builder", search: { template: t.id, color: theme.id } as any })}
                 icon={Rocket} label="Open Website Builder"
               />
               <ActionBtn
-                onClick={() => navigate({ to: "/templates/$id", params: { id: t.id } })}
+                onClick={() => navigate({ to: "/templates/$id", params: { id: t.id }, search: { color: theme.id } as any })}
                 icon={Eye} label="Preview website"
               />
               <ActionBtn
@@ -159,7 +165,7 @@ function ApplyTemplate() {
 
             <div className="mt-6 text-[11px] text-muted-foreground">
               Redirecting to the builder in a moment…
-              <AutoRedirect to={`/builder?template=${t.id}`} />
+              <AutoRedirect to={`/builder?template=${t.id}&color=${theme.id}`} />
             </div>
 
             <Link to="/templates" className="mt-5 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition">
