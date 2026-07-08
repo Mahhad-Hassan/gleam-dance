@@ -1,17 +1,22 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Check, Loader2, Sparkles, Eye, PenTool, LayoutDashboard, Rocket, ArrowRight,
 } from "lucide-react";
+import { z } from "zod";
 import { getTemplate } from "@/lib/templates-data";
+import { getThemeColor } from "@/lib/theme-colors";
 import { cn } from "@/lib/utils";
+
+const searchSchema = z.object({ color: z.string().optional() });
 
 export const Route = createFileRoute("/templates/$id/apply")({
   head: ({ params }) => {
     const t = getTemplate(params.id);
     return { meta: [{ title: `Applying ${t.name} — Aether` }] };
   },
+  validateSearch: (s) => searchSchema.parse(s),
   component: ApplyTemplate,
 });
 
