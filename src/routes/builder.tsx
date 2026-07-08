@@ -8,10 +8,12 @@ import {
 } from "lucide-react";
 import { z } from "zod";
 import { getTemplate, TEMPLATES, type Template } from "@/lib/templates-data";
+import { THEME_COLORS, getThemeColor } from "@/lib/theme-colors";
 import { cn } from "@/lib/utils";
 
 const searchSchema = z.object({
   template: z.string().optional(),
+  color: z.string().optional(),
 });
 
 export const Route = createFileRoute("/builder")({
@@ -26,15 +28,17 @@ type Panel = "pages" | "layers" | "assets" | "components" | "theme" | "navigatio
 const SECTIONS = ["Header","Hero","Features","Gallery","Pricing","Testimonials","Footer"] as const;
 
 function Builder() {
-  const { template: tid } = Route.useSearch();
+  const { template: tid, color: colorId } = Route.useSearch();
   const t = tid ? getTemplate(tid) : TEMPLATES[0];
+  const initialTheme = getThemeColor(colorId);
   const [device, setDevice] = useState<Device>("desktop");
   const [panel, setPanel] = useState<Panel>("pages");
   const [savedTs, setSavedTs] = useState<"idle" | "saving" | "saved">("idle");
   const [publishOpen, setPublishOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("Hero");
   const [theme, setTheme] = useState({
-    accent: t.accent,
+    accent: initialTheme.accent,
+    colorId: initialTheme.id,
     display: t.fontDisplay,
     body: t.fontBody,
     density: 1,
@@ -445,10 +449,24 @@ function ThemePanel({ theme, setTheme, template }: { theme: any; setTheme: (fn: 
           ))}
         </div>
       </InspectorGroup>
-      <InspectorGroup title="Accent">
+      <InspectorGroup title="Theme color">
+        <div className="grid grid-cols-6 gap-1.5">
+          {THEME_COLORS.map(c => (
+            <button key={c.id} title={c.name}
+              onClick={() => setTheme((s: any) => ({ ...s, accent: c.accent, colorId: c.id }))}
+              className={cn("h-7 w-7 rounded-md border transition hover:scale-110",
+                theme.colorId === c.id ? "border-white ring-2 ring-primary/60" : "border-white/10"
+              )} style={{ background: c.accent }} />
+          ))}
+        </div>
+        <div className="mt-1 text-[10px] text-muted-foreground">
+          {THEME_COLORS.find(c => c.id === theme.colorId)?.name ?? "Custom"}
+        </div>
+      </InspectorGroup>
+      <InspectorGroup title="Palette">
         <div className="flex flex-wrap gap-1.5">
           {template.palette.map((c, i) => (
-            <button key={i} onClick={() => setTheme((s: any) => ({ ...s, accent: c }))}
+            <button key={i} onClick={() => setTheme((s: any) => ({ ...s, accent: c, colorId: "custom" }))}
               className={cn("h-7 w-7 rounded-md border transition",
                 theme.accent === c ? "border-white ring-2 ring-primary/50" : "border-white/10"
               )} style={{ background: c }} />
@@ -470,7 +488,7 @@ function ThemePanel({ theme, setTheme, template }: { theme: any; setTheme: (fn: 
         </div>
       </InspectorGroup>
       <button onClick={() => setTheme({
-        accent: template.accent, display: template.fontDisplay, body: template.fontBody,
+        accent: template.accent, colorId: "custom", display: template.fontDisplay, body: template.fontBody,
         density: 1, width: 1200, mode: "dark",
       })}
         className="w-full h-9 rounded-xl glass border border-white/10 text-xs text-muted-foreground hover:text-foreground hover:bg-white/10 transition">

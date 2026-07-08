@@ -1,17 +1,22 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Check, Loader2, Sparkles, Eye, PenTool, LayoutDashboard, Rocket, ArrowRight,
 } from "lucide-react";
+import { z } from "zod";
 import { getTemplate } from "@/lib/templates-data";
+import { getThemeColor } from "@/lib/theme-colors";
 import { cn } from "@/lib/utils";
+
+const searchSchema = z.object({ color: z.string().optional() });
 
 export const Route = createFileRoute("/templates/$id/apply")({
   head: ({ params }) => {
     const t = getTemplate(params.id);
     return { meta: [{ title: `Applying ${t.name} — Aether` }] };
   },
+  validateSearch: (s) => searchSchema.parse(s),
   component: ApplyTemplate,
 });
 
@@ -28,7 +33,9 @@ const STEPS = [
 
 function ApplyTemplate() {
   const { id } = Route.useParams();
+  const { color } = Route.useSearch();
   const t = getTemplate(id);
+  const theme = useMemo(() => getThemeColor(color), [color]);
   const navigate = useNavigate();
   const [idx, setIdx] = useState(0);
   const [done, setDone] = useState(false);
@@ -131,17 +138,23 @@ function ApplyTemplate() {
               Your new website powered by <span className="text-foreground font-medium">{t.name}</span> is ready.
             </p>
 
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full glass border border-white/10 px-3 py-1 text-[11px]">
+              <span className="h-3 w-3 rounded-full" style={{ background: theme.accent }} />
+              <span className="text-muted-foreground">Theme:</span>
+              <span className="font-medium" style={{ color: theme.accent }}>{theme.name}</span>
+            </div>
+
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
               <ActionBtn
-                onClick={() => navigate({ to: "/builder", search: { template: t.id } })}
-                primary icon={PenTool} label="Edit website"
+                onClick={() => navigate({ to: "/builder", search: { template: t.id, color: theme.id } as any })}
+                primary icon={PenTool} label="Edit website" accent={theme.accent} ink={theme.ink}
               />
               <ActionBtn
-                onClick={() => navigate({ to: "/builder", search: { template: t.id } })}
+                onClick={() => navigate({ to: "/builder", search: { template: t.id, color: theme.id } as any })}
                 icon={Rocket} label="Open Website Builder"
               />
               <ActionBtn
-                onClick={() => navigate({ to: "/templates/$id", params: { id: t.id } })}
+                onClick={() => navigate({ to: "/templates/$id", params: { id: t.id }, search: { color: theme.id } as any })}
                 icon={Eye} label="Preview website"
               />
               <ActionBtn
@@ -152,7 +165,7 @@ function ApplyTemplate() {
 
             <div className="mt-6 text-[11px] text-muted-foreground">
               Redirecting to the builder in a moment…
-              <AutoRedirect to={`/builder?template=${t.id}`} />
+              <AutoRedirect to={`/builder?template=${t.id}&color=${theme.id}`} />
             </div>
 
             <Link to="/templates" className="mt-5 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition">
@@ -165,16 +178,15 @@ function ApplyTemplate() {
   );
 }
 
-function ActionBtn({ icon: Icon, label, onClick, primary }: { icon: any; label: string; onClick: () => void; primary?: boolean }) {
+function ActionBtn({ icon: Icon, label, onClick, primary, accent, ink }: { icon: any; label: string; onClick: () => void; primary?: boolean; accent?: string; ink?: string }) {
   return (
     <motion.button
       whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} onClick={onClick}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 h-11 rounded-xl text-sm font-medium transition",
-        primary
-          ? "bg-primary-gradient text-primary-foreground shadow-glow"
-          : "glass border border-white/10 hover:bg-white/10"
+        "inline-flex items-center justify-center gap-1.5 h-11 rounded-xl text-sm font-medium transition shadow-glow",
+        primary ? "" : "glass border border-white/10 hover:bg-white/10"
       )}
+      style={primary && accent ? { background: accent, color: ink } : undefined}
     >
       <Icon className="h-4 w-4" /> {label}
     </motion.button>
