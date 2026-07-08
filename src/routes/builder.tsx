@@ -488,7 +488,7 @@ function ThemePanel({ theme, setTheme, template }: { theme: any; setTheme: (fn: 
         </div>
       </InspectorGroup>
       <button onClick={() => setTheme({
-        accent: template.accent, display: template.fontDisplay, body: template.fontBody,
+        accent: template.accent, colorId: "custom", display: template.fontDisplay, body: template.fontBody,
         density: 1, width: 1200, mode: "dark",
       })}
         className="w-full h-9 rounded-xl glass border border-white/10 text-xs text-muted-foreground hover:text-foreground hover:bg-white/10 transition">
